@@ -1,0 +1,25 @@
+<template>
+    <table style="width: 100%">
+      <tbody>
+        <tr>
+          <td class="slds-var-p-left_small slds-var-p-right_small" style="width: 33%">
+            <lightning-combobox name={name} label={label} options={measureOptions} onchange={handleChange} value={selectOption}></lightning-combobox>
+          </td>
+          <template lwc:if={isBetween}>
+            <td class="slds-var-p-left_small slds-var-p-right_small" style="width: 33%">
+              <lightning-input type={type} label="Start Value" onchange={handleStart}></lightning-input>
+            </td>
+            <td class="slds-var-p-left_small slds-var-p-right_small" style="width: 34%">
+              <lightning-input type={type} label="End Value" onchange={handleEnd}></lightning-input>
+            </td>
+          </template>
+          <template lwc:else>
+            <td class="slds-var-p-left_small slds-var-p-right_small" style="width: 67%">
+              <lightning-input type={type} label="Enter Value" onchange={handleValue}></lightning-input>
+            </td>
+          </template>
+        </tr>
+      </tbody>
+    </table>
+  </template>
+  

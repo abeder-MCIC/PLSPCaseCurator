@@ -1,0 +1,14 @@
+<template>
+  <lightning-card>
+    <div class="slds-var-m-around_medium">
+      <h1 class="slds-text-heading_medium">Save Case Results</h1>
+      <p class="slds-text-body_regular">Choose the name of the initiative you want to save as, or choose 'new' to name your own.</p>
+      <lightning-combobox name="initiative" label="Initiative name" options={options} onchange={handleComboChange}></lightning-combobox>
+      <lightning-input type="text" label="Name of new initiative" onchange={handleInputChange}></lightning-input>
+      <lightning-input type="text" label="Version description" onchange={handleVersionChange}></lightning-input>
+      <lightning-formatted-text value={error}></lightning-formatted-text>
+      <lightning-button variant="brand" label="Save" onclick={handleSave} class="slds-var-m-left_x-small" disabled={isDisabled}></lightning-button>
+      <lightning-button label="Cancel" onclick={handleCancel} class="slds-var-m-left_x-small slds-var-m-bottom_medium"></lightning-button>
+    </div>
+  </lightning-card>
+</template>

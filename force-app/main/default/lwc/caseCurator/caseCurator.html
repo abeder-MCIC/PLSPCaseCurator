@@ -1,0 +1,80 @@
+<template>
+  <lightning-card title="Case Curator">
+    <table slot="actions">
+      <tbody>
+        <tr>
+          <td>
+            <p class="slds-var-p-horizontal_small">
+              <template lwc:if={filterButtonDisabled}>
+                <lightning-button slot="actions" label="Choose Filters" disbled variant="brand-outline"></lightning-button>
+              </template>
+              <template lwc:else>
+                <lightning-button slot="actions" label="Choose Filters" onclick={doFilterModal} variant="brand-outline"></lightning-button>
+              </template>
+            </p>
+          </td>
+          <td>
+            <lightning-button variant="brand" label="Search Cases" onclick={handleSearch}></lightning-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="slds-grid slds-wrap slds-box" slot="footer">
+      <div class="slds-col slds-size_1-of-6 slds-float_right slds-align-middle">
+        <template lwc:if={discreteProgressVisible}>
+          <p class="slds-var-p-horizontal_small">Loading filter values...</p>
+        </template>
+      </div>
+      <div class="slds-col slds-size_4-of-6 slds-align-middle">
+        <template lwc:if={discreteProgressVisible}>
+          <p class="slds-var-p-horizontal_small">
+            <lightning-progress-bar value={discreteProgress}></lightning-progress-bar>
+          </p>
+        </template>
+      </div>
+      <div class="slds-col slds-size_1-of-6 slds-float_right">
+        <lightning-button variant="brand" label="Search Cases" onclick={handleSearch}>></lightning-button>
+      </div>
+    </div>
+
+    <lightning-tabset>
+      <lightning-tab label="Case Search">
+        <lightning-layout multiple-rows>
+          <template for:each={selectedFilters} for:item="filter">
+            <lightning-layout-item key={filter.name} size="3">
+              <template lwc:if={filter.isDimension}>
+                <c-multi-select-picklist
+                  style="width: 400px"
+                  picklistinput={filter.optionList}
+                  selecteditems={filter.selection}
+                  query={filter.query}
+                  fieldname={filter.name}
+                  title={filter.label}
+                  valueslength={valuesLength}
+                  onselection={handleDimensionSelection}
+                ></c-multi-select-picklist>
+              </template>
+
+              <template lwc:elseif={filter.isMeasure}>
+                <c-measure-input filter={filter} onselection={handleMeasureSelection}></c-measure-input>
+              </template>
+              
+            </lightning-layout-item>
+          </template>
+          <lightning-layout-item>
+            <div class="slds-grid">
+              <div class="slds-col slds-size_1-of-2 slds-var-p-left_small slds-var-p-right_small">
+                <lightning-input type="text" label="Text to search for" onchange={handleFreeTextChange}></lightning-input>
+              </div>
+              <div class="slds-col slds-size_1-of-2 slds-var-p-left_small slds-var-p-right_small">
+                <lightning-checkbox-group name="SearchFields" label="Search these fields:" value={value} options={optionsFields} onchange={handleChecks}></lightning-checkbox-group>
+              </div>
+            </div>
+          </lightning-layout-item>
+        </lightning-layout>
+      </lightning-tab>
+      <lightning-tab label="Selected"> Two Content ! </lightning-tab>
+    </lightning-tabset>
+  </lightning-card>
+</template>

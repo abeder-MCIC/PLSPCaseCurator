@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Element__c</fullName>
+    <externalId>false</externalId>
+    <label>Data Element</label>
+    <referenceTo>MDR_Data_Element__c</referenceTo>
+    <relationshipLabel>Data Element Instances</relationshipLabel>
+    <relationshipName>Data_Element_Instances</relationshipName>
+    <relationshipOrder>0</relationshipOrder>
+    <reparentableMasterDetail>true</reparentableMasterDetail>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

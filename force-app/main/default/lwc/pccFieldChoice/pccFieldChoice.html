@@ -1,0 +1,189 @@
+<template>
+  <div class="slds-var-m-around_medium">
+    <h1 class="slds-text-heading_medium">Filter and Column Chooser</h1>
+    <p class="slds-text-body_regular">Check the fields below that you want to filter against or be displayed in the case list.</p>
+  </div>
+
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <div class="slds-var-m-left_medium slds-var-m-right_medium">
+            <h3 class="slds-text-heading_small">Chosen Columns</h3>
+            <p class="slds-text-body_regular">Move the fields into the order you want them presented in the case list.</p>
+            <div class="slds-box_border slds-scrollable_y" style="width: 500px; height: 200px">
+              <ul class="dropdown-list slds-var-p-left_medium">
+                <template for:each={selectedFields} for:item="item">
+                  <li key={item.fieldName} class="dropdown-item">
+                    <lightning-icon icon-name="utility:arrowup" size="x-small" onclick={handleMoveUp} field-name={item.fieldName} class="field-icon"></lightning-icon>
+                    <lightning-icon icon-name="utility:arrowdown" size="x-small" onclick={handleMoveDown} field-name={item.fieldName} class="field-icon"></lightning-icon>
+                    <lightning-icon icon-name="utility:delete" size="x-small" onclick={handleDelete} field-name={item.fieldName} class="field-icon"></lightning-icon>
+                    <lightning-formatted-text value={item.label} class="slds-var-m-left_medium"></lightning-formatted-text>
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+          <!--
+            <div class="slds-var-m-left_medium slds-var-m-right_medium slds-var-m-top_large filterTable">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col" style="width: 30px"><div class="filterTableHeader">&nbsp;</div></th>
+                    <th scope="col" style="width: 300px"><div class="slds-var-p-left_medium filterTableHeader" onclick={handleSort} id="selectedLabel">Label</div></th>
+                    <th scope="col" style="width: 100px">
+                      <div class="slds-var-p-left_medium filterTableHeader" onclick={handleSort} id="selectedFieldType">Field Type</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template for:each={selectedFields} for:item="field">
+                    <tr key={field.name}>
+                      <td class={field.class}>
+                        <div class="slds-float_left slds-var-p-left_medium">
+                          <lightning-icon src={chevronUp} onclick={handleMoveUp} field-name={field.name}></lightning-icon>
+                          <lightning-icon src={chevronDown} onclick={handleMoveDown} field-name={field.name}></lightning-icon>
+                          <lightning-icon src={xDelete} onclick={handleDelete} field-name={field.name}></lightning-icon>
+                        </div>
+                      </td>
+                      <td class={field.class}>
+                        <div class="slds-var-p-left_medium">
+                          <lightning-formatted-text value={field.label}></lightning-formatted-text>
+                        </div>
+                      </td>
+                      <td class={field.class}>
+                        <div class="slds-var-p-left_medium">
+                          <lightning-formatted-text value={field.fieldType}></lightning-formatted-text>
+                        </div>
+                      </td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+            -->
+
+          <div class="slds-var-p-around_medium">
+            <lightning-input name="enter-search" label="Search field names" type="search" onkeyup={handleSearch}></lightning-input>
+          </div>
+
+          <div class="slds-var-m-left_medium slds-var-m-right_medium slds-var-m-top_large filterTable">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 100px">
+                    <div
+                      class="slds-var-p-left_xx-small slds-var-p-right_xx-small filterTableHeader"
+                      style="border-left-width: 1px; border-right-width: 0px; text-align: center"
+                      onclick={handleSort}
+                      id="filter"
+                      onmouseenter={handleMouseEnter}
+                      onmouseleave={handleMouseLeave}
+                    >
+                      Filter
+                      <template lwc:if={showFilterSort}>
+                        <lightning-icon icon-name={sortIcon} size="xx-small" class="sort-icon"></lightning-icon>
+                      </template>
+                      <template lwc:else>
+                        <lightning-icon icon-name="utility:arrowup" size="xx-small" class="blank-icon"></lightning-icon>
+                      </template>
+                    </div>
+                  </th>
+                  <th scope="col" style="width: 100px">
+                    <div
+                      class="slds-var-p-left_xx-small slds-var-p-right_xx-small filterTableHeader"
+                      style="border-left-width: 1px; border-right-width: 0px; text-align: center"
+                      onclick={handleSort}
+                      id="column"
+                      onmouseenter={handleMouseEnter}
+                      onmouseleave={handleMouseLeave}
+                    >
+                      Column
+                      <template lwc:if={showColumnSort}>
+                        <lightning-icon icon-name={sortIcon} size="xx-small" class="sort-icon"></lightning-icon>
+                      </template>
+                      <template lwc:else>
+                        <lightning-icon icon-name="utility:arrowup" size="xx-small" class="blank-icon"></lightning-icon>
+                      </template>
+                    </div>
+                  </th>
+                  <th scope="col" style="width: 300px">
+                    <div class="slds-var-p-left_medium filterTableHeader" onclick={handleSort} id="label" onmouseenter={handleMouseEnter} onmouseleave={handleMouseLeave}>
+                      Label
+                      <template lwc:if={showLabelSort}>
+                        <lightning-icon icon-name={sortIcon} size="xx-small" class="sort-icon"></lightning-icon>
+                      </template>
+                      <template lwc:else>
+                        <lightning-icon icon-name="utility:arrowup" size="xx-small" class="blank-icon"></lightning-icon>
+                      </template>
+                    </div>
+                  </th>
+                  <th scope="col" style="width: 100px">
+                    <div class="slds-var-p-left_medium filterTableHeader" onclick={handleSort} id="fieldType" onmouseenter={handleMouseEnter} onmouseleave={handleMouseLeave}>
+                      Field Type
+                      <template lwc:if={showTypeSort}>
+                        <lightning-icon icon-name={sortIcon} size="xx-small" class="sort-icon"></lightning-icon>
+                      </template>
+                      <template lwc:else>
+                        <lightning-icon icon-name="utility:arrowup" size="xx-small" class="blank-icon"></lightning-icon>
+                      </template>
+                    </div>
+                  </th>
+                  <th>
+                    <div class="slds-var-p-left_medium filterTableHeader" onclick={handleSort} id="description" onmouseenter={handleMouseEnter} onmouseleave={handleMouseLeave}>
+                      Description
+                      <template lwc:if={showDescriptionSort}>
+                        <lightning-icon icon-name={sortIcon} size="xx-small" class="sort-icon"></lightning-icon>
+                      </template>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={fields} for:item="field">
+                  <tr key={field.name}>
+                    <td class={field.class}>
+                      <div class="slds-float_left slds-var-p-left_medium">
+                        <template lwc:if={field.isFilter}>
+                          <lightning-input type="checkbox" onchange={handleFilter} data-field-name={field.name} checked></lightning-input>
+                        </template>
+                        <template lwc:else>
+                          <lightning-input type="checkbox" onchange={handleFilter} data-field-name={field.name}></lightning-input>
+                        </template>
+                      </div>
+                    </td>
+                    <td class={field.class}>
+                      <div class="slds-float_left slds-var-p-left_medium">
+                        <template lwc:if={field.isColumn}>
+                          <lightning-input type="checkbox" onchange={handleColumn} data-field-name={field.name} checked></lightning-input>
+                        </template>
+                        <template lwc:else>
+                          <lightning-input type="checkbox" onchange={handleColumn} data-field-name={field.name}></lightning-input>
+                        </template>
+                      </div>
+                    </td>
+                    <td class={field.class}>
+                      <div class="slds-var-p-left_medium">
+                        <lightning-formatted-text value={field.label}></lightning-formatted-text>
+                      </div>
+                    </td>
+                    <td class={field.class}>
+                      <div class="slds-var-p-left_medium">
+                        <lightning-formatted-text value={field.fieldType}></lightning-formatted-text>
+                      </div>
+                    </td>
+                    <td class={field.class}>
+                      <div class="slds-var-p-left_medium">
+                        <lightning-formatted-text value={field.description}></lightning-formatted-text>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</template>

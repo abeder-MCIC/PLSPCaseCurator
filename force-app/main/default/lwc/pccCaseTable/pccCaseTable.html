@@ -1,0 +1,17 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-datatable
+    class="slds-var-m-left_medium slds-var-m-top_medium slds-var-m-right_medium"
+    key-field="id"
+    columns={columns}
+    data={caseList}
+    column-widths-mode="auto"
+    default-sort-direction={defaultSortDirection}
+    sorted-direction={sortDirection}
+    sorted-by={sortedBy}
+    onsort={onHandleSort}
+    selected-rows={selectedRows}
+    onrowselection={handleRowSelection}
+  >
+  </lightning-datatable>
+</template>

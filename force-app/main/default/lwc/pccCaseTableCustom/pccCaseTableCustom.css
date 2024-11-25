@@ -1,0 +1,33 @@
+.evenRow {
+    background-color: #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+    border-top: 2px solid #FFFFFF;
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.oddRow {
+    background-color: #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+    border-top: 2px solid #FFFFFF;
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+.headerRow{
+    background-color: #fafaf9;
+    border-bottom: 1px solid #dddbda;
+    border-right: 1px solid #b0adab;
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+.selectedRow{
+    background-color: #f3f2f2;
+    border-top: 2px solid #dddbda;
+    border-bottom: 2px solid #dddbda;
+    padding: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+}

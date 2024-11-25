@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_Parents</fullName>
+    <columns>NAME</columns>
+    <columns>Instance_Count__c</columns>
+    <columns>Description__c</columns>
+    <columns>RDI_Certified__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Is_Child__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>Don&apos;t Show Children</label>
+</ListView>

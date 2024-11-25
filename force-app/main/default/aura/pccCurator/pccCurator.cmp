@@ -1,0 +1,73 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+  <aura:registerEvent name="pslpUpdate" type="wave:update" />
+  <aura:attribute name="dsId" type="String" />
+  <aura:attribute name="isListLoaded" type="Boolean" default="false" />
+  <aura:attribute name="dsVersionId" type="String" />
+  <aura:attribute name="waveFilter" type="String" access="GLOBAL" />
+  <aura:attribute name="selectionsDeselections" type="String" default="{}" />
+  <aura:attribute name="listSelDesel" type="String" default="{}" />
+  <aura:attribute name="newCaseSelections" type="String" default="[]" />
+  <aura:attribute name="caseNumbers" type="String[]" default="[]" />
+  <aura:attribute name="clearTo" type="String" default="[]" />
+  <aura:attribute name="filterDisabled" type="Boolean" default="true" />
+  <aura:attribute name="load" type="String" default="" />
+  <aura:attribute name="dsName" type="String" default="Unique_Claim_PSLP_Contributing_Factor" />
+  <aura:attribute name="idField" type="String" default="MCIC_Claim_Number__c" />
+  <aura:attribute name="numberField" type="String" default="MCIC_Claim_Number__c" />
+  <aura:attribute
+    name="filterJSON"
+    type="Map[]"
+    default='[{"fieldName":"Coverage_Major__c","type":"Dimension","label":"Coverage Type"},{"fieldName":"MCIC_Risk_Pool__c","type":"Dimension","label":"MCIC Risk Pool"},{"fieldName":"Policy_Origin_Code__c","type":"Dimension","label":"Policy Origin Code"},{"fieldName":"MCIC_Case_Type__c","type":"Dimension","label":"Claim Type"},{"fieldName":"Node_Name__c","type":"Dimension","label":"Division"},{"fieldName":"MCIC_AMC_Node_Formula__c","type":"Dimension","label":"AMC"},{"fieldName":"Retained","type":"Dimension","label":"Retained"},{"fieldName":"Claim_Made_Date","type":"Date","label":"Claim Made Date"},{"fieldName":"Date_of_Loss","type":"Date","label":"Date of Loss"}]'
+  />
+  <aura:attribute
+    name="columnJSON"
+    type="Map[]"
+    default='[{"fieldName":"Node_Name__c","type":"Dimension","label":"Division"},{"fieldName":"MCIC_Case_Type__c","type":"Dimension","label":"Claim Type"},{"fieldName":"MCIC_Status__c","type":"Dimension","label":"Claim Status"},{"fieldName":"Claim_Made_Date","type":"Date","label":"Claim Made Date"},{"fieldName":"Date_of_Loss","type":"Date","label":"Date of Loss"},{"fieldName":"Ind_Incurred","type":"Measure","label":"Ind Incurred"},{"fieldName":"Incurred__c","type":"Measure","label":"Incurred"},{"fieldName":"Patient_Injury_Outcome_Clinical_Severity__c_bucket","type":"Dimension","label":"Patient Clinical Severity Groups"},{"fieldName":"Involved_Departments_Primary__c","type":"Dimension","label":"Involved Departments Primary"},{"fieldName":"Case_Category__c","type":"Dimension","label":"Case Category"},{"fieldName":"Allegation__c","type":"Dimension","label":"Allegation"},{"fieldName":"Case_Synopsis__c","type":"Dimension","label":"Case Synopsis"},{"fieldName":"Clinical_Summary__c","type":"Dimension","label":"Clinical Summary"},{"fieldName":"ContributingFactor.Primary_Clinical_Severity_Flag","type":"Dimension","label":"Primary Clinical Severity flag"},{"fieldName":"ContributingFactor.AdverseOutcome.Primary_Adverse_Outcome__c","type":"Dimension","label":"Primary Adverse Outcome"}]'
+  />
+
+  <lightning:card title="PSLP Case Curator">
+    <lightning:tabset>
+      <lightning:tab label="Case Search">
+        <c:pccCaseSearch
+          onids="{!c.handleIds}"
+          chosenFilters="{!v.filterJSON}"
+          chosenColumns="{!v.columnJSON}"
+          oncaseselection="{!c.handleSearchCaseSelection}"
+          updatedSelections="{!v.listSelDesel}"
+          loadNumbers="{!v.load}"
+          dsName="{!v.dsName}"
+          idField="{!v.idField}"
+          numberField="{!v.numberField}"
+        ></c:pccCaseSearch>
+      </lightning:tab>
+      <lightning:tab label="Case List">
+        <lightning:button onclick="{!c.handleClearUnselected}" label="Clear Unselected" variant="brand" class="slds-var-m-left_medium slds-var-m-bottom_medium" />
+        <c:pccSave caseNumbers="{!v.caseNumbers}" oncasenumbers="{!c.handleLoad}"></c:pccSave>
+        <c:pccCaseTable
+          class="slds-var-m-top_medium"
+          chosenColumns="{!v.columnJSON}"
+          newCaseData="{!v.newCaseSelections}"
+          updatedSelections="{!v.selectionsDeselections}"
+          onloaded="{!c.handleListLoaded}"
+          oncaseselection="{!c.handleListCaseSelection}"
+          clearTo="{!v.clearTo}"
+        ></c:pccCaseTable>
+      </lightning:tab>
+      <lightning:tab label="Choose Filters and Columns">
+        <c:pccFieldChoice
+          onselection="{!c.handleFilterSelection}"
+          dsId="{!v.dsId}"
+          dsVersionId="{!v.dsVersionId}"
+          defaultFilters="{!v.filterJSON}"
+          defaultColumns="{!v.columnJSON}"
+        ></c:pccFieldChoice>
+      </lightning:tab>
+      <lightning:tab label="Explore Dashboard" onactive="{!c.handleDashboardTabClick}">
+        <div class="container">
+          <lightning:button onclick="{!c.handleFilterDashboard}" label="Filter" variant="brand" class="slds-p-left_medium" disabled="{!v.filterDisabled}" />
+        </div>
+        <wave:waveDashboard developerName="PSLP_Curation_Dashboard" height="1000" showHeader="false" showTitle="false" filter="{!v.waveFilter}" aura:id="WaveDashboard"/>
+      </lightning:tab>
+    </lightning:tabset>
+  </lightning:card>
+</aura:component>

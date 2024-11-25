@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Quality__c</fullName>
+    <defaultValue>&apos;Unknown&apos;</defaultValue>
+    <externalId>false</externalId>
+    <label>Data Quality</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Always</fullName>
+                <default>false</default>
+                <label>Always</label>
+            </value>
+            <value>
+                <fullName>Status</fullName>
+                <default>false</default>
+                <label>Status</label>
+            </value>
+            <value>
+                <fullName>Sometimes</fullName>
+                <default>false</default>
+                <label>Sometimes</label>
+            </value>
+            <value>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+                <label>Unknown</label>
+            </value>
+            <value>
+                <fullName>Depreciate</fullName>
+                <default>false</default>
+                <label>Depreciate</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

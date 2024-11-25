@@ -1,0 +1,42 @@
+.app {
+    --slds-c-input-color-background: var(--c-example-red);
+    --slds-c-checkbox-button-sizing-square-small: ;
+  }
+
+.filterTableHeader {
+    background: #e8ebee;
+    font-weight: bold;
+    border: 1px solid #BBBBBB;
+    border-left-width: 0px;
+}
+
+.filterTableChecked {
+    color: #e8ebee;
+}
+
+.filterTableOdd{
+    background: #FFFFFF;
+}
+
+.filterTableEven{
+    background: #f0f2f5;
+    border-top: 1px solid #e8ebee;
+    border-bottom: 1px solid #e8ebee;
+}
+.filterTable {
+    border-bottom: 1px solid #e8ebee;
+    border-left: 1px solid #e8ebee;
+    border-right: 1px solid #e8ebee;
+}
+
+.sort-icon {
+    --slds-c-icon-color-foreground-default: rgb(88, 88, 255);
+}
+
+.blank-icon {
+    --slds-c-icon-color-foreground-default: #e8ebee;
+}
+
+.field-icon {
+    --slds-c-icon-color-foreground-default: rgb(65, 65, 65);
+}

@@ -1,0 +1,60 @@
+<!-- sldsValidatorIgnore -->
+<template>
+  <lightning-layout multiple-rows>
+    <template for:each={filters} for:item="field">
+      <lightning-layout-item key={field.name} size="3">
+        <template lwc:if={field.isDimension}>
+          <c-pcc-multi-select-picklist
+            ds-id={dsId}
+            ds-version-id={dsVersionId}
+            field-name={field.name}
+            title={field.label}
+            onselection={handleDimensionSelection}
+          ></c-pcc-multi-select-picklist>
+        </template>
+
+        <template lwc:if={field.isMeasure}>
+          <c-pcc-measure-input field-name={field.name} label={field.label} type="number" onselection={handleMeasureSelection}></c-pcc-measure-input>
+        </template>
+
+        <template lwc:if={field.isDate}>
+          <c-pcc-measure-input field-name={field.name} label={field.label} type="date" onselection={handleMeasureSelection}></c-pcc-measure-input>
+        </template>
+      </lightning-layout-item>
+    </template>
+    <lightning-layout-item size="3">
+      <div class="slds-grid">
+        <div class="slds-col slds-size_1-of-2 slds-var-p-left_small slds-var-p-right_small">
+          <lightning-input type="text" label="Text to search for" onchange={handleFTSValue}></lightning-input>
+        </div>
+        <div class="slds-col slds-size_1-of-2 slds-var-p-left_small slds-var-p-right_small">
+          <lightning-checkbox-group
+            name="SearchFields"
+            label="Search these fields:"
+            options={searchFields}
+            value={searchSelection}
+            onchange={handleFTSCheck}
+          ></lightning-checkbox-group>
+        </div>
+      </div>
+    </lightning-layout-item>
+  </lightning-layout>
+  <lightning-button variant="brand" label="Search Cases" title="Search Cases" onclick={handleSearch} class="slds-m-left_x-small"></lightning-button>
+  <template lwc:if={showRecordCount}>
+    <div class="slds-var-p-left_small slds-var-p-right_small">
+      <template lwc:if={showPrevLink}>
+        <lightning-formatted-text value="<- Prev" onclick={handlePrevLink} linkify></lightning-formatted-text>
+      </template>
+      <lightning-formatted-rich-text value="Records "></lightning-formatted-rich-text>
+      <lightning-formatted-rich-text value={currentRecord}></lightning-formatted-rich-text>
+      <lightning-formatted-rich-text value=" through "></lightning-formatted-rich-text>
+      <lightning-formatted-rich-text value={maxRecord}></lightning-formatted-rich-text>
+      <lightning-formatted-rich-text value=" of "></lightning-formatted-rich-text>
+      <lightning-formatted-rich-text value={totalRecord}></lightning-formatted-rich-text>
+      <template lwc:if={showNextLink}>
+        <lightning-formatted-text value="Next ->" onclick={handleNextLink} linkify></lightning-formatted-text>
+      </template>
+    </div>
+  </template>
+<c-pcc-case-table-custom chosen-columns={chosenColumns} new-case-data={caseList} clear-existing updated-selections={updatedSelections} result-limit={resultLimit} onorderby={handleOrderBy}></c-pcc-case-table-custom>
+</template>

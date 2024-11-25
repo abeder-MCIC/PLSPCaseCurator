@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disposition__c</fullName>
+    <externalId>false</externalId>
+    <label>Disposition</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Future State</fullName>
+                <default>false</default>
+                <label>Future State</label>
+            </value>
+            <value>
+                <fullName>Refactored</fullName>
+                <default>false</default>
+                <label>Refactored</label>
+            </value>
+            <value>
+                <fullName>BO Conversion</fullName>
+                <default>false</default>
+                <label>BO Conversion</label>
+            </value>
+            <value>
+                <fullName>Internal</fullName>
+                <default>false</default>
+                <label>Internal</label>
+            </value>
+            <value>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+                <label>Legacy</label>
+            </value>
+            <value>
+                <fullName>Deprecate</fullName>
+                <default>false</default>
+                <label>Deprecate</label>
+            </value>
+            <value>
+                <fullName>Suppress</fullName>
+                <default>false</default>
+                <label>Suppress</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

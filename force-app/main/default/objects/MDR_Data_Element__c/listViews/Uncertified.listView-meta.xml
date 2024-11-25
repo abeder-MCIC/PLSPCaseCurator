@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Uncertified</fullName>
+    <columns>NAME</columns>
+    <columns>Parent__c</columns>
+    <columns>Instance_Count__c</columns>
+    <columns>Description__c</columns>
+    <columns>Data_Quality__c</columns>
+    <columns>RDI_Certified__c</columns>
+    <columns>Priority__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>RDI_Certified__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <label>Uncertified</label>
+</ListView>

@@ -1,0 +1,50 @@
+<template>
+    <table class="slds-var-p-left_medium slds-var-p-right_medium">
+        <thead>
+            <tr style="border-top: 1px solid #AAAAAA; border-bottom: 1px solid #AAAAAA; background-color: #EEEEEE;">
+                <th class="headerRow">
+                    &nbsp;
+                </th>
+                <th class="headerRow" onclick={handleSort} data-column="MCIC_Claim_Number__c">
+                    <lightning-formatted-text value="Claim Number" onclick={handleSort} data-column={column.fieldName}></lightning-formatted-text>
+                </th>
+                <template for:each={columnList} for:item="column">
+                    <th key={column.fieldName} class="headerRow" onclick={handleSort} data-column={column.fieldName}>
+                        <lightning-formatted-text value={column.label}></lightning-formatted-text>
+                        <template lwc:if={column.showUp}>
+                            <lightning-icon icon-name="utility:arrowup" size="x-small"></lightning-icon>
+                        </template>
+                        <template lwc:elseif={column.showDown}>
+                            <lightning-icon icon-name="utility:arrowdown" size="x-small"></lightning-icon>
+                        </template>
+                        <template lwc:else>
+                            <lightning-icon icon-name="utility:chevrondown" size="x-small"></lightning-icon>
+                        </template>
+                    </th>
+                </template>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={caseList} for:item="record">
+                <tr key={record.id} class="slds-var-p-left_medium slds-var-p-right_medium" onmouseenter={selectRow} onmouseleave={deselectRow} onclick={handleClick} data-rowid={record.id}> 
+                    <td class={record.class}>
+                        <template lwc:if={record.selected}>
+                            <lightning-input type="checkbox" name={record.checkbox} checked data-id={record.checkbox}></lightning-input>
+                        </template>
+                        <template lwc:else>
+                            <lightning-input type="checkbox" name={record.checkbox} data-id={record.checkbox}></lightning-input>
+                        </template>
+                    </td>
+                    <td class={record.class}>
+                        <lightning-formatted-url value={record.url} label={record.id}></lightning-formatted-url>
+                    </td>
+                    <template for:each={record.value} for:item="data">
+                        <td key={data.columnKey} class={record.class}>
+                            <lightning-formatted-text value={data.value}></lightning-formatted-text>
+                        </td>
+                    </template>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+</template>
